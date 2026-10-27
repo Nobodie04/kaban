@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Kaban</title>
+  <meta name="description" content="Kaban membantu pekerjaan yang tidak sempat Anda kerjakan: antar jemput anak, bersih tandon dan taman, titip dan antar barang.">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="/static/tokens.css"><script src="/static/theme.js"></script>
+  <link rel="stylesheet" href="/static/home.css">
+</head>
+<body>
+
+{% if s.banner %}<div class="banner" role="status">{{ s.banner }}</div>{% endif %}
+<header class="top">
+  <div class="wrap nav">
+    <a class="logo" href="#atas">kaban<span>.</span></a>
+    <ul>
+      <li><a href="#layanan">Layanan</a></li>
+      <li><a href="#cara">Cara kerja</a></li>
+      <li><a href="#area">Area &amp; peta</a></li>
+      <li><a href="#mitra">Jadi mitra</a></li>
+    </ul>
+    <span class="nav-actions"><a class="btn btn-ghost" href="/masuk" id="navAkun">Masuk</a><a class="btn btn-accent" href="#pesan">Titip sekarang</a></span>
+  </div>
+</header>
+
+<main id="atas">
+<div class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow" style="color:var(--hero-muted)">Kaban · kami bantu</p>
+      <h1 style="margin-top:12px">{{ s.hero_judul }} <em>{{ s.hero_sorot }}</em></h1>
+      <p class="lead">{{ s.hero_lead }}</p>
+      <div class="cta">
+        <a class="btn btn-accent" href="#pesan">Titip pekerjaan</a>
+        <a class="btn btn-ghost" href="#mitra">Gabung jadi mitra</a>
+      </div>
+    </div>
+    <aside class="ticket" aria-label="Contoh daftar titipan">
+      <div class="ticket-head"><b>Daftar titipan hari ini</b><small>Contoh</small></div>
+      <ul>
+        <li class="done"><span class="tick">✓</span><span class="t">Antar Dimas ke SD<small>Berangkat 06.30</small></span><span class="chip ok">Selesai</span></li>
+        <li><span class="tick"></span><span class="t">Kuras tandon air 1.000 liter<small>Mulai 09.00</small></span><span class="chip go">Dikerjakan</span></li>
+        <li><span class="tick"></span><span class="t">Titip beli galon dan gas 3 kg<small>Sebelum 15.00</small></span><span class="chip">Menunggu mitra</span></li>
+        <li><span class="tick"></span><span class="t">Antar berkas ke kantor kecamatan<small>Hari ini</small></span><span class="chip">Terjadwal</span></li>
+      </ul>
+      <p class="note">Tampilan contoh untuk menggambarkan alur, bukan data pelanggan.</p>
+    </aside>
+  </div>
+</div>
+
+<section id="layanan">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Layanan</p>
+      <h2>Pekerjaan kecil yang menyita waktu, kami ambil alih</h2>
+    </div>
+    <div class="services">
+      {% for v in services %}
+      <article class="svc{% if v.kode == 'lain' %} other{% endif %}">
+        <div class="ic">{{ icon(v.ikon) }}</div>
+        <h3>{{ v.nama }}</h3>
+        <p>{{ v.deskripsi }}</p>
+        {% if v.harga_mulai %}<span class="from">{{ v.harga_mulai }}</span>{% endif %}
+      </article>
+      {% else %}
+      <p>Layanan sedang diperbarui. Silakan hubungi admin lewat WhatsApp.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="steps-band" id="cara">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Cara kerja</p>
+      <h2>Tiga langkah dari titip sampai beres</h2>
+    </div>
+    <ol class="steps">
+      <li><h3>Ceritakan pekerjaannya</h3><p>Isi form: jenis layanan, alamat, waktu, dan catatan. Tidak perlu akun.</p></li>
+      <li><h3>Kami cocokkan dengan mitra</h3><p>Admin Kaban memilih mitra terdekat di area Anda dan mengirim harga yang jelas sebelum jalan.</p></li>
+      <li><h3>Mitra mengerjakan, Anda terima kabar</h3><p>Anda dapat kabar saat mitra berangkat dan saat pekerjaan selesai. Bayar setelah beres.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section id="area">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Area layanan &amp; peta mitra</p>
+      <h2>Mitra Kaban tersebar per kelurahan</h2>
+      <p style="color:var(--muted)">Pilih layanan untuk melihat mitra di sekitar Anda. Peta ini skema contoh; titik mitra asli akan muncul seiring perekrutan.</p>
+    </div>
+    <div class="map-grid">
+      <div>
+        <div class="filters" role="group" aria-label="Filter layanan" id="filters"></div>
+        <div class="mapbox">
+          <svg viewBox="0 0 640 440" role="img" aria-label="Peta skema area layanan Kaban dengan titik mitra contoh" id="map">
+            <rect width="640" height="440" fill="var(--map-land)"/>
+            <path d="M-10 330 C120 300 200 360 320 330 S520 270 650 300 L650 450 L-10 450Z" fill="var(--map-water)"/>
+            <g fill="var(--map-block)">
+              <rect x="30" y="30" width="110" height="80" rx="8"/><rect x="170" y="30" width="130" height="80" rx="8"/><rect x="340" y="30" width="100" height="80" rx="8"/><rect x="480" y="30" width="130" height="80" rx="8"/>
+              <rect x="30" y="140" width="110" height="90" rx="8"/><rect x="170" y="140" width="130" height="90" rx="8"/><rect x="340" y="140" width="100" height="90" rx="8"/><rect x="480" y="140" width="130" height="90" rx="8"/>
+              <rect x="30" y="260" width="110" height="50" rx="8"/><rect x="170" y="260" width="130" height="40" rx="8"/><rect x="340" y="250" width="100" height="40" rx="8"/><rect x="480" y="240" width="130" height="40" rx="8"/>
+            </g>
+            <g stroke="var(--map-road)" stroke-width="10" fill="none" stroke-linecap="round">
+              <path d="M0 125H640"/><path d="M0 245H640" stroke-width="7"/><path d="M155 0V330"/><path d="M320 0V320" stroke-width="14"/><path d="M460 0V300"/>
+            </g>
+            <g fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="5 5" opacity=".7">
+              <circle cx="320" cy="125" r="105"/>
+            </g>
+            <text x="320" y="20" text-anchor="middle" font-size="12" fill="var(--muted)" font-family="Figtree,sans-serif">Jl. Utama</text>
+            <text x="560" y="385" text-anchor="middle" font-size="12" fill="var(--muted)" font-family="Figtree,sans-serif" font-style="italic">Sungai / laut</text>
+            <g id="pins"></g>
+          </svg>
+        </div>
+        <div class="legend" id="legend"></div>
+        <div class="maplink">
+          <a class="btn btn-ghost" id="gmaps" href="https://www.google.com/maps/search/?api=1&amp;query=Makassar" target="_blank" rel="noopener">Cari lokasi di Google Maps</a>
+          <span class="small">Dibuka di tab baru.</span>
+        </div>
+      </div>
+      <aside class="panel" aria-live="polite" id="detail"></aside>
+    </div>
+  </div>
+</section>
+
+<section class="mitra-band" id="mitra">
+  <div class="wrap mitra-grid">
+    <div>
+      <p class="eyebrow">Program mitra</p>
+      <h2 style="margin-top:10px">Punya waktu dan tenaga? Jadi mitra Kaban.</h2>
+      <p style="color:var(--hero-muted);margin-top:14px;max-width:48ch">Kami cari orang di tiap kelurahan untuk mengerjakan titipan di sekitarnya. Semakin banyak mitra, semakin cepat pelanggan terlayani.</p>
+      <ul class="perks">
+        <li><span class="chk">✓</span><div><b>Pilih sendiri jenis pekerjaan</b><span class="d">Hanya ambil layanan yang Anda sanggup: antar jemput, kebersihan, atau antar barang.</span></div></li>
+        <li><span class="chk">✓</span><div><b>Atur jam kerja sendiri</b><span class="d">Cocok untuk pekerjaan sampingan, mahasiswa, atau ibu rumah tangga.</span></div></li>
+        <li><span class="chk">✓</span><div><b>Order datang dari Kaban</b><span class="d">Tidak perlu cari pelanggan. Anda menerima tugas sesuai lokasi.</span></div></li>
+      </ul>
+      <p class="reqs"><b>Persyaratan awal:</b> KTP, nomor WhatsApp aktif, tinggal di area layanan, dan bersedia verifikasi data. Antar jemput anak butuh kendaraan layak dan SIM.</p>
+    </div>
+    <form class="card" id="formMitra" novalidate>
+      <h3>Daftar jadi mitra</h3>
+      <label for="m-nama">Nama lengkap<input id="m-nama" required autocomplete="name"></label>
+      <div class="row2">
+        <label for="m-wa">Nomor WhatsApp<input id="m-wa" type="tel" inputmode="tel" required autocomplete="tel" placeholder="08xxxxxxxxxx"></label>
+        <label for="m-kel">Kelurahan / area<input id="m-kel" required placeholder="mis. Tamalanrea"></label>
+      </div>
+      <fieldset style="border:0;padding:0;margin:0">
+        <legend style="font-weight:600;font-size:.9rem;margin-bottom:6px">Layanan yang sanggup dikerjakan</legend>
+        <div class="checks" id="m-svc">{% for v in services if v.kode != 'lain' %}<label><input type="checkbox" name="msvc" value="{{ v.kode }}"> {{ v.nama }}</label>{% endfor %}</div>
+      </fieldset>
+      <label for="m-kend">Kendaraan
+        <select id="m-kend"><option>Sepeda motor</option><option>Mobil</option><option>Tidak ada</option></select>
+      </label>
+      <label for="m-cat">Pengalaman atau catatan (opsional)<textarea id="m-cat"></textarea></label>
+      <p class="err" id="m-err" hidden></p>
+      <button class="btn btn-accent" type="submit">Siapkan pendaftaran</button>
+      <div id="m-out"></div>
+    </form>
+  </div>
+</section>
+
+<section id="pesan">
+  <div class="wrap" style="max-width:720px">
+    <div class="section-head">
+      <p class="eyebrow">Titip pekerjaan</p>
+      <h2>Ceritakan apa yang perlu dikerjakan</h2>
+    </div>
+    <form class="card" id="formPesan" novalidate>
+      <label for="p-svc">Layanan<select id="p-svc">{% for v in services %}<option value="{{ v.kode }}">{{ v.nama }}</option>{% endfor %}</select></label>
+      <div class="row2">
+        <label for="p-nama">Nama<input id="p-nama" required autocomplete="name"></label>
+        <label for="p-wa">Nomor WhatsApp<input id="p-wa" type="tel" inputmode="tel" required autocomplete="tel" placeholder="08xxxxxxxxxx"></label>
+      </div>
+      <label for="p-alamat">Alamat lokasi pekerjaan<input id="p-alamat" required autocomplete="street-address" placeholder="Jalan, nomor, kelurahan"></label>
+      <div class="row2">
+        <label for="p-tgl">Tanggal<input id="p-tgl" type="date" required></label>
+        <label for="p-jam">Jam<input id="p-jam" type="time" required></label>
+      </div>
+      <label for="p-cat">Detail pekerjaan<textarea id="p-cat" placeholder="mis. nama sekolah dan jam masuk, ukuran tandon, daftar barang, alamat tujuan antar"></textarea></label>
+      <p class="err" id="p-err" hidden></p>
+      <button class="btn btn-brand" type="submit">Siapkan pesanan</button>
+      <div id="p-out"></div>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap"><span><b class="brand">kaban.</b> Kami bantu urusan Anda.</span><span>{{ s.kota }} · {{ s.jam_operasional }} · © 2026 Kaban</span></div>
+</footer>
+
+<script>
+  window.KABAN = {{ {"waNumber": s.wa_admin, "kota": s.kota, "services": services|map(attribute="kode")|list, "names": services|map(attribute="nama")|list}|tojson }};
+</script>
+<script src="/static/home.js"></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+/* Kaban: satu sumber warna dan font untuk semua halaman (beranda, masuk, akun, admin). Ubah warna di sini saja. */
+:root{
+  --bg:#F2F5F2; --surface:#FFFFFF; --ink:#10231F; --muted:#546560; --line:#D3DCD7; --soft:#E9EFEB;
+  --brand:#0F4C3F; --brand-ink:#F2F5F2; --accent:#F5B82E; --accent-ink:#10231F;
+  --hero-bg:#0F4C3F; --hero-ink:#F2F5F2; --hero-muted:#B5CFC6;
+  --ok:#1E7B4F; --warn:#9A6200; --bad:#B3392B; --star:#C98500;
+  --map-land:#E4EBE6; --map-water:#BCD8E2; --map-road:#FFFFFF; --map-block:#D5DFD8;
+  --font-display:"Bricolage Grotesque","Trebuchet MS",sans-serif;
+  --font-body:"Figtree","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0C1815; --surface:#14241F; --ink:#E8EFEA; --muted:#93A59E; --line:#26403A; --soft:#1A2E28;
+  --brand:#3FBF9A; --brand-ink:#08201A; --hero-bg:#11352D; --hero-ink:#F2F5F2; --hero-muted:#A6C3B9;
+  --ok:#5ED19E; --warn:#F0B84D; --bad:#FF8A7A; --star:#F5B82E;
+  --map-land:#172B26; --map-water:#1B3A46; --map-road:#243F38; --map-block:#1E352F; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0C1815; --surface:#14241F; --ink:#E8EFEA; --muted:#93A59E; --line:#26403A; --soft:#1A2E28;
+  --brand:#3FBF9A; --brand-ink:#08201A; --hero-bg:#11352D; --hero-ink:#F2F5F2; --hero-muted:#A6C3B9;
+  --ok:#5ED19E; --warn:#F0B84D; --bad:#FF8A7A; --star:#F5B82E;
+  --map-land:#172B26; --map-water:#1B3A46; --map-road:#243F38; --map-block:#1E352F; color-scheme:dark}
+
+/* tombol ganti tema (static/theme.js): di bilah atas aplikasi, atau melayang di halaman masuk */
+.theme-btn{all:unset;box-sizing:border-box;display:grid;place-items:center;flex:none;width:40px;height:40px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.theme-btn svg{width:19px;height:19px}
+.theme-btn:hover{border-color:var(--brand)}
+.theme-btn:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+.topbar .theme-btn{margin-left:10px}
+.theme-btn.float{position:fixed;top:14px;right:14px;z-index:20}
+.topbar h1{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:420px){.topbar .theme-btn{margin-left:6px}}
+@media(max-width:420px){.topbar{gap:8px}.topbar h1{font-size:1.05rem}}

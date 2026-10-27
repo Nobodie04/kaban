@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <title>Mitra Kaban</title>
+  <meta name="robots" content="noindex">
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&display=swap"><link rel="stylesheet" href="/static/tokens.css"><script src="/static/theme.js"></script><link rel="stylesheet" href="/static/base.css"><link rel="stylesheet" href="/static/shell.css">
+<link rel="stylesheet" href="/static/akun.css">
+<link rel="stylesheet" href="/static/mitra.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar" id="sidebar" aria-label="Menu mitra">
+    <a class="logo" href="/">kaban<span>.</span><small>mitra</small></a>
+    <nav class="nav" id="nav"></nav>
+    <div class="side-foot">
+      <div class="who"><div class="avatar" id="avatar">?</div><div style="min-width:0"><b id="whoName">Akun</b><span id="whoWa"></span></div></div>
+      <a class="btn ghost sm" href="/akun" id="custLink"></a>
+      <a class="btn ghost sm" href="/" id="siteLink"></a>
+      <button class="btn ghost sm" id="logout"></button>
+    </div>
+  </aside>
+  <div class="scrim"></div>
+  <div class="main">
+    <header class="topbar">
+      <button class="btn ghost icon menu-btn" id="menuBtn" aria-label="Buka menu"></button>
+      <h1 id="pageTitle">Ringkasan</h1>
+      <span class="grow"></span>
+      <label class="avail" id="topAvail"><input type="checkbox" id="availToggle"><span class="dot" aria-hidden="true"></span><span id="availText">Tersedia</span></label>
+    </header>
+    <main class="view" id="view" tabindex="-1"></main>
+  </div>
+</div>
+<script src="/static/app.js"></script>
+<script src="/static/ui.js"></script>
+<script src="/static/charts.js"></script>
+<script src="/static/mitra.js"></script>
+</body>
+</html>

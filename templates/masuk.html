@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Masuk Kaban</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="/static/tokens.css"><script src="/static/theme.js"></script>
+  <link rel="stylesheet" href="/static/base.css">
+  <link rel="stylesheet" href="/static/masuk.css">
+</head>
+<body data-theme-toggle>
+<main class="login">
+  <aside class="side">
+    <a class="logo" href="/">kaban<span>.</span></a>
+    <h1>Pantau titipan Anda di satu tempat.</h1>
+    <p>Lihat status pesanan, riwayatnya, dan pesan ulang tanpa mengisi data lagi.</p>
+    <a class="back" href="/">&larr; Kembali ke beranda</a>
+  </aside>
+
+  <section class="panel">
+    <div class="tabs" role="tablist" aria-label="Masuk atau daftar">
+      <button class="tab" role="tab" id="t-masuk" aria-selected="true" aria-controls="f-masuk">Masuk</button>
+      <button class="tab" role="tab" id="t-daftar" aria-selected="false" aria-controls="f-daftar">Daftar</button>
+    </div>
+
+    <form id="f-masuk" novalidate>
+      <h2>Masuk ke akun</h2>
+      <label for="l-wa">Nomor WhatsApp<input id="l-wa" type="tel" inputmode="tel" autocomplete="username" placeholder="081234567890" required></label>
+      <label for="l-pw">Password<input id="l-pw" type="password" autocomplete="current-password" required></label>
+      <div class="msg err" id="l-msg" hidden></div>
+      <button class="btn" type="submit">Masuk</button>
+      <p class="small">Belum punya akun? <a href="#" id="to-daftar">Daftar di sini</a>. Admin juga masuk dari halaman ini.</p>
+    </form>
+
+    <form id="f-daftar" hidden novalidate>
+      <h2>Buat akun</h2>
+      <p class="small">Pesanan yang pernah Anda buat dengan nomor yang sama ikut tersambung ke akun ini.</p>
+      <label for="r-nama">Nama<input id="r-nama" autocomplete="name" required></label>
+      <label for="r-wa">Nomor WhatsApp<input id="r-wa" type="tel" inputmode="tel" autocomplete="username" placeholder="081234567890" required></label>
+      <label for="r-pw">Password (minimal 8 karakter)<input id="r-pw" type="password" autocomplete="new-password" minlength="8" required></label>
+      <div class="msg err" id="r-msg" hidden></div>
+      <button class="btn" type="submit">Daftar</button>
+    </form>
+  </section>
+</main>
+<script src="/static/app.js"></script>
+<script>
+  const $ = id => document.getElementById(id);
+  const next = (() => { const n = new URLSearchParams(location.search).get("next"); return n && /^\/[a-z]/.test(n) ? n : "/akun"; })();
+
+  function show(which){
+    const masuk = which === "masuk";
+    $("t-masuk").setAttribute("aria-selected", String(masuk));
+    $("t-daftar").setAttribute("aria-selected", String(!masuk));
+    $("f-masuk").hidden = !masuk; $("f-daftar").hidden = masuk;
+  }
+  $("t-masuk").onclick = () => show("masuk");
+  $("t-daftar").onclick = () => show("daftar");
+  $("to-daftar").onclick = e => { e.preventDefault(); show("daftar"); $("r-nama").focus(); };
+
+  function done(r){ location.href = r.role === "admin" ? "/admin" : (r.mitra && !location.search.includes("next=")) ? "/mitra" : next; }
+  function busy(form, on){ form.querySelector("button[type=submit]").disabled = on; }
+
+  $("f-masuk").onsubmit = async e => {
+    e.preventDefault(); note($("l-msg"), ""); busy(e.target, true);
+    try { done(await api("POST", "/api/login", {wa: $("l-wa").value, password: $("l-pw").value})); }
+    catch (x) { note($("l-msg"), x.message); busy(e.target, false); }
+  };
+  $("f-daftar").onsubmit = async e => {
+    e.preventDefault(); note($("r-msg"), ""); busy(e.target, true);
+    try { done(await api("POST", "/api/register", {nama: $("r-nama").value, wa: $("r-wa").value, password: $("r-pw").value})); }
+    catch (x) { note($("r-msg"), x.message); busy(e.target, false); }
+  };
+  if (location.hash === "#daftar") show("daftar");
+</script>
+</body>
+</html>

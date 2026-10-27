@@ -1,0 +1,46 @@
+/* Halaman mitra: tambahan di atas shell.css dan akun.css. Semua warna dari tokens.css. */
+
+/* tombol ketersediaan di bilah atas */
+.avail{display:inline-flex;align-items:center;gap:9px;padding:.4rem .9rem .4rem .75rem;border-radius:99px;border:1.5px solid var(--ok);color:var(--ok);font:600 .86rem var(--font-body);cursor:pointer;background:var(--surface);min-height:40px;user-select:none}
+.avail input{position:absolute;opacity:0;width:1px;height:1px}
+.avail .dot{width:10px;height:10px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 4px color-mix(in srgb,var(--ok) 22%,transparent)}
+.avail.off{border-color:var(--line);color:var(--muted)}
+.avail.off .dot{background:var(--muted);box-shadow:none}
+.avail:focus-within{outline:2px solid var(--brand);outline-offset:2px}
+
+/* kartu tugas */
+.job.offer{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.offer-note{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:10px;background:color-mix(in srgb,var(--accent) 16%,var(--surface));font-size:.88rem}
+.offer-note .ico{flex:none;margin-top:2px;width:18px;height:18px}
+.chip.offer{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.daytag{display:inline-block;margin-left:8px;padding:.1rem .5rem;border-radius:6px;font-size:.72rem;font-weight:700;vertical-align:1px;background:var(--soft);color:var(--ink)}
+.daytag.today{background:var(--brand);color:var(--brand-ink)}
+.daytag.soon{background:var(--accent);color:var(--accent-ink)}
+.daytag.late{background:color-mix(in srgb,var(--bad) 16%,var(--surface));color:var(--bad)}
+.bad-text{color:var(--bad)}
+.btn.bad-text:hover{border-color:var(--bad)}
+.job .row .btn:first-child{min-width:0}
+
+/* tabel pendapatan */
+th.num,td.num{text-align:right;font-variant-numeric:tabular-nums}
+tfoot td{font-weight:600;background:var(--soft);border-bottom:0}
+.tablewrap td .stars{white-space:nowrap}
+.tag.ok{color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,var(--surface))}
+.page-head .row input[type=month]{min-height:40px;width:auto}
+.kv{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:0}
+.kv dt{font-size:.74rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600}
+.kv dd{margin:2px 0 0;font:700 1.25rem var(--font-display);font-variant-numeric:tabular-nums}
+
+@media(max-width:560px){
+  .avail{padding:.35rem .7rem .35rem .6rem}
+  .job .row .btn{flex:1 1 calc(50% - 8px);justify-content:center}
+  .job .row .btn:first-child{flex-basis:100%}
+  .page-head .row{width:100%}
+}
+.hint-warn{color:var(--warn);margin:0}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.tile b{white-space:nowrap;font-size:clamp(1.4rem,2.1vw,1.9rem)}
+.tiles{grid-template-columns:repeat(auto-fit,minmax(168px,1fr))}
+.main{min-width:0}
+.page-head,.page-head .row{flex-wrap:wrap}
+@media(max-width:420px){.avail{padding:.3rem .55rem;gap:7px;font-size:.8rem}.avail .dot{width:8px;height:8px}}
